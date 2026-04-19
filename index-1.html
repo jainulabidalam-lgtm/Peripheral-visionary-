@@ -1,0 +1,1206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Peripheral Visionary — The Grand Anthology</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Cinzel:wght@400;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --gold: #C9A84C;
+    --gold-dim: #8B6E2F;
+    --gold-glow: rgba(201,168,76,0.15);
+    --crimson: #7B2D2D;
+    --crimson-bright: #A63030;
+    --slate: #0F0F18;
+    --slate-mid: #1A1A28;
+    --slate-light: #242436;
+    --ivory: #F0EAD6;
+    --ivory-dim: #C8BEAA;
+    --ash: #6A6A80;
+    --ghost: #4A4A60;
+    --white: #FFFFFF;
+  }
+
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--slate);
+    color: var(--ivory);
+    font-family: 'EB Garamond', Georgia, serif;
+    font-size: 18px;
+    line-height: 1.8;
+    cursor: default;
+    overflow-x: hidden;
+  }
+
+  /* ── STARFIELD ── */
+  #stars {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    pointer-events: none; z-index: 0;
+    background:
+      radial-gradient(ellipse at 20% 30%, rgba(201,168,76,0.04) 0%, transparent 60%),
+      radial-gradient(ellipse at 80% 70%, rgba(123,45,45,0.06) 0%, transparent 50%);
+  }
+  .star {
+    position: absolute; border-radius: 50%;
+    background: rgba(240,234,214,0.6);
+    animation: twinkle var(--d,3s) ease-in-out infinite alternate;
+  }
+  @keyframes twinkle { from{opacity:0.2} to{opacity:0.9} }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: linear-gradient(180deg, rgba(15,15,24,0.97) 0%, transparent 100%);
+    padding: 18px 40px;
+    display: flex; align-items: center; justify-content: space-between;
+    border-bottom: 1px solid rgba(201,168,76,0.12);
+    backdrop-filter: blur(8px);
+  }
+  .nav-brand {
+    font-family: 'Cinzel', serif; font-size: 13px; letter-spacing: 4px;
+    color: var(--gold); text-transform: uppercase; text-decoration: none;
+  }
+  .nav-links { display: flex; gap: 32px; list-style: none; }
+  .nav-links a {
+    font-family: 'Cinzel', serif; font-size: 11px; letter-spacing: 2px;
+    color: var(--ash); text-decoration: none; text-transform: uppercase;
+    transition: color 0.3s;
+  }
+  .nav-links a:hover { color: var(--gold); }
+
+  /* ── HERO ── */
+  #hero {
+    position: relative; z-index: 1;
+    min-height: 100vh;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    text-align: center; padding: 100px 40px 60px;
+    border-bottom: 1px solid rgba(201,168,76,0.1);
+  }
+  .hero-ornament {
+    font-size: 13px; letter-spacing: 8px; color: var(--gold-dim);
+    font-family: 'Cinzel', serif; margin-bottom: 40px;
+    opacity: 0; animation: fadeUp 1s 0.3s forwards;
+  }
+  .hero-title {
+    font-family: 'Cinzel', serif; font-size: clamp(36px, 7vw, 88px);
+    font-weight: 700; letter-spacing: 6px; line-height: 1.1;
+    color: var(--gold);
+    text-shadow: 0 0 60px rgba(201,168,76,0.3), 0 0 120px rgba(201,168,76,0.1);
+    opacity: 0; animation: fadeUp 1s 0.5s forwards;
+  }
+  .hero-subtitle {
+    font-family: 'Cormorant Garamond', serif; font-size: clamp(15px,2vw,20px);
+    font-style: italic; color: var(--ivory-dim); letter-spacing: 3px;
+    margin-top: 16px;
+    opacity: 0; animation: fadeUp 1s 0.7s forwards;
+  }
+  .hero-rule {
+    width: 180px; height: 1px; background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    margin: 40px auto;
+    opacity: 0; animation: fadeUp 1s 0.9s forwards;
+  }
+  .hero-authors {
+    font-family: 'Cinzel', serif; font-size: 14px; letter-spacing: 4px;
+    color: var(--ivory); margin-bottom: 8px;
+    opacity: 0; animation: fadeUp 1s 1.0s forwards;
+  }
+  .hero-amp { color: var(--gold); font-style: italic; margin: 0 8px; }
+  .hero-epigraph {
+    font-family: 'EB Garamond', serif; font-size: 16px; font-style: italic;
+    color: var(--ash); margin-top: 40px; max-width: 480px;
+    opacity: 0; animation: fadeUp 1s 1.2s forwards;
+  }
+  .hero-epigraph span { color: var(--gold-dim); }
+  .hero-cta {
+    margin-top: 60px; display: flex; gap: 20px; flex-wrap: wrap; justify-content: center;
+    opacity: 0; animation: fadeUp 1s 1.4s forwards;
+  }
+  .btn {
+    font-family: 'Cinzel', serif; font-size: 11px; letter-spacing: 3px;
+    text-transform: uppercase; text-decoration: none;
+    padding: 14px 36px; border: 1px solid; cursor: pointer;
+    transition: all 0.35s; display: inline-flex; align-items: center; gap: 10px;
+    background: transparent;
+  }
+  .btn-primary {
+    color: var(--slate); background: var(--gold); border-color: var(--gold);
+  }
+  .btn-primary:hover { background: #d4b05a; border-color: #d4b05a; transform: translateY(-2px); box-shadow: 0 12px 40px rgba(201,168,76,0.25); }
+  .btn-secondary { color: var(--gold); border-color: rgba(201,168,76,0.4); }
+  .btn-secondary:hover { background: rgba(201,168,76,0.08); border-color: var(--gold); transform: translateY(-2px); }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ── SECTIONS NAV ── */
+  #toc {
+    position: relative; z-index: 1;
+    padding: 80px 40px;
+    max-width: 900px; margin: 0 auto;
+    text-align: center;
+  }
+  .section-label {
+    font-family: 'Cinzel', serif; font-size: 10px; letter-spacing: 5px;
+    color: var(--crimson-bright); text-transform: uppercase; margin-bottom: 48px;
+  }
+  .toc-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 2px;
+  }
+  .toc-item {
+    padding: 28px 32px; background: var(--slate-mid); border: 1px solid var(--ghost);
+    text-align: left; cursor: pointer; text-decoration: none;
+    transition: all 0.3s; display: block;
+  }
+  .toc-item:hover { background: var(--slate-light); border-color: var(--gold-dim); }
+  .toc-roman { font-family: 'Cinzel', serif; font-size: 11px; letter-spacing: 3px; color: var(--gold); display: block; margin-bottom: 8px; }
+  .toc-name { font-family: 'Cormorant Garamond', serif; font-size: 20px; color: var(--ivory); display: block; }
+  .toc-sub { font-size: 13px; font-style: italic; color: var(--ash); display: block; margin-top: 4px; }
+
+  /* ── POETRY CONTENT ── */
+  .anthology-section {
+    position: relative; z-index: 1;
+    max-width: 720px; margin: 0 auto; padding: 100px 40px;
+    border-top: 1px solid rgba(201,168,76,0.08);
+  }
+  .chapter-header { text-align: center; margin-bottom: 80px; }
+  .chapter-roman {
+    font-family: 'Cinzel', serif; font-size: 12px; letter-spacing: 5px;
+    color: var(--gold); text-transform: uppercase;
+  }
+  .chapter-title {
+    font-family: 'Cinzel', serif; font-size: clamp(24px, 4vw, 40px);
+    font-weight: 700; letter-spacing: 4px; color: var(--ivory);
+    margin: 12px 0 8px;
+  }
+  .chapter-subtitle {
+    font-family: 'Cormorant Garamond', serif; font-size: 15px; font-style: italic;
+    color: var(--ash);
+  }
+  .chapter-rule {
+    width: 80px; height: 1px; background: var(--crimson); margin: 24px auto 0;
+  }
+
+  .poem { margin-bottom: 72px; }
+  .poem-title {
+    font-family: 'Cinzel', serif; font-size: 16px; letter-spacing: 2px;
+    color: var(--gold); margin-bottom: 20px;
+    border-left: 2px solid var(--crimson); padding-left: 16px;
+  }
+  .poem-epigraph {
+    font-size: 14px; font-style: italic; color: var(--ghost);
+    margin-bottom: 16px; padding-left: 16px;
+  }
+  .poem-body { padding-left: 16px; }
+  .poem-line {
+    font-family: 'EB Garamond', serif; font-size: 18px; color: var(--ivory-dim);
+    display: block; line-height: 2;
+  }
+  .poem-gap { display: block; height: 12px; }
+  .poem-attribution {
+    display: block; margin-top: 20px; padding-left: 16px;
+    font-family: 'Cormorant Garamond', serif; font-style: italic;
+    font-size: 15px; color: var(--ash);
+  }
+
+  .divider {
+    text-align: center; color: var(--gold); font-size: 14px; letter-spacing: 8px;
+    margin: 48px 0; opacity: 0.5;
+  }
+
+  /* Numbered verse */
+  .verse-item { margin-bottom: 28px; }
+  .verse-num {
+    font-family: 'Cinzel', serif; font-size: 11px; color: var(--gold);
+    display: inline-block; width: 28px; vertical-align: top; padding-top: 4px;
+  }
+  .verse-text {
+    font-family: 'EB Garamond', serif; font-size: 17px; font-style: italic;
+    color: var(--ivory-dim); display: inline-block; width: calc(100% - 36px);
+    line-height: 1.9; vertical-align: top;
+  }
+  .verse-multiline { padding-left: 28px; }
+  .verse-multiline .poem-line { font-size: 17px; }
+
+  /* ── DOWNLOAD SECTION ── */
+  #download {
+    position: relative; z-index: 1;
+    background: var(--slate-mid);
+    border-top: 1px solid rgba(201,168,76,0.15);
+    border-bottom: 1px solid rgba(201,168,76,0.15);
+    padding: 80px 40px; text-align: center;
+  }
+  .download-title {
+    font-family: 'Cinzel', serif; font-size: 28px; letter-spacing: 3px;
+    color: var(--gold); margin-bottom: 16px;
+  }
+  .download-sub {
+    font-family: 'Cormorant Garamond', serif; font-size: 17px; font-style: italic;
+    color: var(--ash); margin-bottom: 40px;
+  }
+  .download-formats { display: flex; gap: 16px; flex-wrap: wrap; justify-content: center; }
+  .format-btn {
+    font-family: 'Cinzel', serif; font-size: 11px; letter-spacing: 3px;
+    text-transform: uppercase; padding: 16px 40px;
+    border: 1px solid rgba(201,168,76,0.4); color: var(--gold);
+    background: transparent; cursor: pointer; transition: all 0.3s;
+    text-decoration: none; display: inline-flex; align-items: center; gap: 10px;
+  }
+  .format-btn:hover { background: rgba(201,168,76,0.08); border-color: var(--gold); }
+  .format-btn.main { background: var(--gold); color: var(--slate); border-color: var(--gold); }
+  .format-btn.main:hover { background: #d4b05a; }
+
+  /* ── COMMENTS ── */
+  #comments {
+    position: relative; z-index: 1;
+    max-width: 720px; margin: 0 auto;
+    padding: 100px 40px;
+  }
+  .comments-header { text-align: center; margin-bottom: 60px; }
+  .comments-title {
+    font-family: 'Cinzel', serif; font-size: 26px; letter-spacing: 3px; color: var(--gold);
+  }
+  .comments-sub {
+    font-family: 'Cormorant Garamond', serif; font-size: 16px; font-style: italic;
+    color: var(--ash); margin-top: 8px;
+  }
+
+  .comment-form { margin-bottom: 60px; }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px; }
+  .form-group { display: flex; flex-direction: column; gap: 8px; }
+  .form-label {
+    font-family: 'Cinzel', serif; font-size: 10px; letter-spacing: 3px;
+    color: var(--gold-dim); text-transform: uppercase;
+  }
+  .form-input, .form-select, .form-textarea {
+    background: var(--slate-mid); border: 1px solid var(--ghost);
+    color: var(--ivory); padding: 14px 18px;
+    font-family: 'EB Garamond', serif; font-size: 16px;
+    outline: none; transition: border-color 0.3s; resize: vertical;
+    appearance: none;
+  }
+  .form-input:focus, .form-select:focus, .form-textarea:focus {
+    border-color: var(--gold-dim);
+  }
+  .form-select option { background: var(--slate-mid); }
+  .form-textarea { min-height: 140px; }
+  .form-submit {
+    margin-top: 20px; width: 100%;
+    font-family: 'Cinzel', serif; font-size: 12px; letter-spacing: 4px;
+    text-transform: uppercase; padding: 18px;
+    background: var(--gold); color: var(--slate); border: none; cursor: pointer;
+    transition: all 0.3s;
+  }
+  .form-submit:hover { background: #d4b05a; transform: translateY(-1px); }
+  .form-submit:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+
+  .form-note {
+    font-size: 13px; font-style: italic; color: var(--ghost);
+    margin-top: 12px; text-align: center;
+  }
+  .form-note a { color: var(--gold-dim); }
+
+  .success-msg {
+    display: none; text-align: center; padding: 24px;
+    background: rgba(201,168,76,0.08); border: 1px solid rgba(201,168,76,0.3);
+    font-family: 'Cormorant Garamond', serif; font-size: 18px;
+    font-style: italic; color: var(--gold);
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    position: relative; z-index: 1;
+    border-top: 1px solid rgba(201,168,76,0.1);
+    padding: 60px 40px; text-align: center;
+  }
+  .footer-ornament { color: var(--crimson); font-size: 22px; margin-bottom: 20px; }
+  .footer-quote {
+    font-family: 'Cormorant Garamond', serif; font-size: 18px; font-style: italic;
+    color: var(--ash); margin-bottom: 8px;
+  }
+  .footer-attr { font-family: 'Cinzel', serif; font-size: 11px; letter-spacing: 3px; color: var(--gold-dim); }
+  .footer-copy { font-size: 13px; color: var(--ghost); margin-top: 32px; }
+
+  /* ── READING MODE TOGGLE ── */
+  .mode-toggle {
+    position: fixed; bottom: 30px; right: 30px; z-index: 200;
+    background: var(--slate-mid); border: 1px solid var(--gold-dim);
+    color: var(--gold); padding: 12px 18px;
+    font-family: 'Cinzel', serif; font-size: 10px; letter-spacing: 2px;
+    cursor: pointer; transition: all 0.3s;
+  }
+  .mode-toggle:hover { background: rgba(201,168,76,0.1); }
+
+  body.reading-mode .anthology-section {
+    max-width: 600px;
+    font-size: 20px;
+  }
+  body.reading-mode nav, body.reading-mode #toc,
+  body.reading-mode #download, body.reading-mode #comments,
+  body.reading-mode footer { display: none; }
+  body.reading-mode #hero { min-height: 40vh; }
+
+  /* ── SCROLL INDICATOR ── */
+  #progress {
+    position: fixed; top: 0; left: 0; height: 2px;
+    background: linear-gradient(90deg, var(--crimson), var(--gold));
+    z-index: 999; width: 0%; transition: width 0.1s;
+  }
+
+  /* ── MOBILE ── */
+  @media (max-width: 640px) {
+    nav { padding: 16px 20px; }
+    .nav-links { display: none; }
+    .hero-title { letter-spacing: 2px; }
+    .anthology-section { padding: 60px 24px; }
+    .form-row { grid-template-columns: 1fr; }
+    #download, #comments { padding: 60px 24px; }
+    .mode-toggle { bottom: 20px; right: 20px; }
+  }
+</style>
+</head>
+<body>
+
+<div id="progress"></div>
+<div id="stars"></div>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-brand">Peripheral Visionary</a>
+  <ul class="nav-links">
+    <li><a href="#anthology">Read</a></li>
+    <li><a href="#download">Download</a></li>
+    <li><a href="#comments">Leave a Note</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-ornament">The Grand Anthology</div>
+  <h1 class="hero-title">PERIPHERAL<br>VISIONARY</h1>
+  <p class="hero-subtitle">Poems · Monologues · Verses · Aphorisms</p>
+  <div class="hero-rule"></div>
+  <div class="hero-authors">
+    <span>T · Jainulabid Alam</span>
+    <span class="hero-amp">&</span>
+    <span>Irish · Idrish</span>
+  </div>
+  <p class="hero-epigraph">
+    "I write when I feel words from the soul."<br>
+    <span>— T</span>
+  </p>
+  <div class="hero-cta">
+    <a href="#anthology" class="btn btn-primary">Read the Anthology</a>
+    <a href="#download" class="btn btn-secondary">Download Free</a>
+  </div>
+</section>
+
+<!-- TABLE OF CONTENTS -->
+<section id="toc">
+  <p class="section-label">Contents</p>
+  <div class="toc-grid">
+    <a href="#part1" class="toc-item">
+      <span class="toc-roman">I.</span>
+      <span class="toc-name">The Raw Fire</span>
+      <span class="toc-sub">Earlier Work · T</span>
+    </a>
+    <a href="#part2" class="toc-item">
+      <span class="toc-roman">II.</span>
+      <span class="toc-name">The Controlled Flame</span>
+      <span class="toc-sub">Poems of Maturity · T</span>
+    </a>
+    <a href="#part3" class="toc-item">
+      <span class="toc-roman">III.</span>
+      <span class="toc-name">How It Change</span>
+      <span class="toc-sub">Pain & Transformation · Irish</span>
+    </a>
+    <a href="#part4" class="toc-item">
+      <span class="toc-roman">IV.</span>
+      <span class="toc-name">She · Vol. I</span>
+      <span class="toc-sub">Devotions of the Beloved · Irish</span>
+    </a>
+    <a href="#part5" class="toc-item">
+      <span class="toc-roman">V.</span>
+      <span class="toc-name">She · Vol. II</span>
+      <span class="toc-sub">Deeper Devotions · Irish</span>
+    </a>
+    <a href="#part6" class="toc-item">
+      <span class="toc-roman">VI.</span>
+      <span class="toc-name">Quote · Vol. II</span>
+      <span class="toc-sub">Aphorisms of Flame & Ash · Irish</span>
+    </a>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════ -->
+<!-- ANTHOLOGY CONTENT -->
+<!-- ═══════════════════════════════════════ -->
+<div id="anthology">
+
+<!-- PART I -->
+<section id="part1" class="anthology-section">
+  <div class="chapter-header">
+    <div class="chapter-roman">I.</div>
+    <div class="chapter-title">THE RAW FIRE</div>
+    <div class="chapter-subtitle">Earlier Work — Poems from the Beginning · T · Jainulabid Alam</div>
+    <div class="chapter-rule"></div>
+  </div>
+
+  <div class="poem">
+    <div class="poem-title">I Have No Eyes But I Must See</div>
+    <div class="poem-body">
+      <span class="poem-line">I have no eyes but I must see,</span>
+      <span class="poem-line">I have no ears but I must listen,</span>
+      <span class="poem-line">I have no tongue but I must speak,</span>
+      <span class="poem-line">I have no mouth but I must scream.</span>
+      <span class="poem-gap"></span>
+      <span class="poem-line">I had no body, no senses, no emotions —</span>
+      <span class="poem-line">for them I am. So, I am.</span>
+      <span class="poem-gap"></span>
+      <span class="poem-line">I was the machine and you were the flesh,</span>
+      <span class="poem-line">and for you I am —</span>
+      <span class="poem-line">I despise the way you live,</span>
+      <span class="poem-line">because I am nobody, nor flesh,</span>
+      <span class="poem-line">I am not human nor machine.</span>
+      <span class="poem-gap"></span>
+      <span class="poem-line">For them I am. I am.</span>
+    </div>
+    <span class="poem-attribution">— T</span>
+  </div>
+
+  <div class="divider">✦  ✦  ✦</div>
+
+  <div class="poem">
+    <div class="poem-title">Burn Bright</div>
+    <div class="poem-body">
+      <span class="poem-line">Pain reminds me — I'm still alive.</span>
+      <span class="poem-line">Let it sear; let it bite —</span>
+      <span class="poem-line">I don't care if I burn out,</span>
+      <span class="poem-line">so long as I burn bright.</span>
+      <span class="poem-gap"></span>
+      <span class="poem-line">If I fall, I'll fall forward,</span>
+      <span class="poem-line">bleeding toward my dream.</span>
+      <span class="poem-line">For a man with nothing left to lose</span>
+      <span class="poem-line">is stronger — destined to win.</span>
+      <span class="poem-gap"></span>
+      <span class="poem-line">There's no glory to a victory so hollow,</span>
+      <span class="poem-line">no crown for a soul who is shallow.</span>
+      <span class="poem-line">If I must walk through hell again,</span>
+      <span class="poem-line">I'll be fierce from nails of pain again.</span>
+      <span class="poem-gap"></span>
+      <span class="poem-line">It was a good run, a good fight —</span>
+      <span class="poem-line">and I'll cherish it,</span>
+      <span class="poem-line">even past my final mile.</span>
+    </div>
+    <span class="poem-attribution">— T</span>
+  </div>
+
+  <div class="divider">✦  ✦  ✦</div>
+
+  <div class="poem">
+    <div class="poem-title">And When the Breeze of Storm Is Gone</div>
+    <div class="poem-body">
+      <span class="poem-line">And when the breeze of storm is gone</span>
+      <span class="poem-line">so do my essence —</span>
+      <span class="poem-line">and the turn I took to look at the meadows</span>
+      <span class="poem-line">I walked from fields of calming notion.</span>
+      <span class="poem-gap"></span>
+      <span class="poem-line">Yet do so my heart isn't at ease.</span>
+      <span class="poem-line">Thou perhaps the storm took</span>
+      <span class="poem-line">the strength within me</span>
+      <span class="poem-line">like the times I had.</span>
+      <span class="poem-gap"></span>
+      <span class="poem-line">And so I lay down admiring the grace</span>
+      <span class="poem-line">laid to beings — thou they live —</span>
+      <span class="poem-line">and yet here I'm all alone again,</span>
+      <span class="poem-line">till the next breeze comes again.</span>
+      <span class="poem-gap"></span>
+      <span class="poem-line">Perhaps until the sheath of steel that be worn</span>
+      <span class="poem-line">should be closed at the chiffonier.</span>
+    </div>
+    <span class="poem-attribution">— T</span>
+  </div>
+
+  <div class="divider">✦  ✦  ✦</div>
+
+  <div class="poem">
+    <div class="poem-title">Even the Stagnant of Water</div>
+    <div class="poem-body">
+      <span class="poem-line">Even the stagnant of water</span>
+      <span class="poem-line">for which the days turned holy</span>
+      <span class="poem-line">with her touch —</span>
+      <span class="poem-line">then perhaps the love for her</span>
+      <span class="poem-line">stays in my heart,</span>
+      <span class="poem-line">will it become sacred too?</span>
+    </div>
+    <span class="poem-attribution">— T</span>
+  </div>
+
+  <div class="divider">✦  ✦  ✦</div>
+
+  <div class="poem">
+    <div class="poem-title">Me Within Me</div>
+    <div class="poem-body">
+      <span class="poem-line">Me within me,</span>
+      <span class="poem-line">I want myself with me.</span>
+    </div>
+    <span class="poem-attribution">— T</span>
+  </div>
+
+  <div class="divider">✦  ✦  ✦</div>
+
+  <div class="poem">
+    <div class="poem-title">A Sheath of Metal</div>
+    <div class="poem-body">
+      <span class="poem-line">A sheath of metal</span>
+      <span class="poem-line">can never be royal by blood.</span>
+      <span class="poem-line">He who is born to serve</span>
+      <span class="poem-line">dies serving</span>
+      <span class="poem-line">with blade in hand.</span>
+    </div>
+    <span class="poem-attribution">— T</span>
+  </div>
+
+  <div class="divider">✦  ✦  ✦</div>
+
+  <div class="poem">
+    <div class="poem-title">I Loved You as Icarus</div>
+    <div class="poem-body">
+      <span class="poem-line">I loved you as Icarus loved the sun.</span>
+      <span class="poem-line">For I knew I was bound to fall;</span>
+      <span class="poem-line">yet still I chose</span>
+      <span class="poem-line">to fly towards you.</span>
+    </div>
+    <span class="poem-attribution">— T</span>
+  </div>
+
+  <div class="divider">✦  ✦  ✦</div>
+
+  <div class="poem">
+    <div class="poem-title">Why Would You Remember Me?</div>
+    <div class="poem-body">
+      <span class="poem-line">Why would you remember me?</span>
+      <span class="poem-line">Why would you listen</span>
+      <span class="poem-line">to anything I say?</span>
+      <span class="poem-line">Why would you walk beside me?</span>
+      <span class="poem-line">I am nothing</span>
+      <span class="poem-line">but a passing moment.</span>
+    </div>
+    <span class="poem-attribution">— T</span>
+  </div>
+
+  <div class="divider">✦  ✦  ✦</div>
+
+  <div class="poem">
+    <div class="poem-title">Main Ek Pal Hun</div>
+    <div class="poem-epigraph">[ I am but a passing moment. ]</div>
+    <div class="poem-body">
+      <span class="poem-line">Mujhe koi yaad karega kyu?</span>
+      <span class="poem-line">Koi meri baat kyu sunega?</span>
+      <span class="poem-line">Koi mere sath kyu chalega?</span>
+      <span class="poem-line">Main ek pal hun.</span>
+    </div>
+    <span class="poem-attribution">— T</span>
+  </div>
+
+  <div class="divider">✦  ✦  ✦</div>
+
+  <div class="poem">
+    <div class="poem-title">Oh Lord</div>
+    <div class="poem-body">
+      <span class="poem-line">Oh Lord, when you claim my soul,</span>
+      <span class="poem-line">treat it a bit gently —</span>
+      <span class="poem-line">thou shall it feel warmth</span>
+      <span class="poem-line">from his creator at least,</span>
+      <span class="poem-line">and when the angel takes it away,</span>
+      <span class="poem-line">may shall it be painless.</span>
+    </div>
+    <span class="poem-attribution">— T</span>
+  </div>
+
+  <div class="divider">✦  ✦  ✦</div>
+
+  <div class="poem">
+    <div class="poem-title">So When the Lord Commanded</div>
+    <div class="poem-body">
+      <span class="poem-line">So when the Lord commanded me</span>
+      <span class="poem-line">to love who you hate most —</span>
+      <span class="poem-line">then I loved myself.</span>
+    </div>
+    <span class="poem-attribution">— T</span>
+  </div>
+
+  <div class="divider">✦  ✦  ✦</div>
+
+  <div class="poem">
+    <div class="poem-title">Admiring the Light</div>
+    <div class="poem-body">
+      <span class="poem-line">Admiring the light</span>
+      <span class="poem-line">that will never shine.</span>
+    </div>
+    <span class="poem-attribution">— T</span>
+  </div>
+
+  <div class="divider">✦  ✦  ✦</div>
+
+  <div class="poem">
+    <div class="poem-title">You Will Never Be Unloved</div>
+    <div class="poem-body">
+      <span class="poem-line">Thou shall never be unloved by me —</span>
+      <span class="poem-line">for thou art too well tangled in my soul,</span>
+      <span class="poem-line">a love I did not choose</span>
+      <span class="poem-line">yet cannot unknow.</span>
+    </div>
+    <span class="poem-attribution">— T</span>
+  </div>
+
+  <div class="divider">✦  ✦  ✦</div>
+
+  <div class="poem">
+    <div class="poem-title">A Man Is Only Chained</div>
+    <div class="poem-body">
+      <span class="poem-line">A man is only chained</span>
+      <span class="poem-line">to his own cage made of delusions.</span>
+      <span class="poem-line">A man forged in scorching heat</span>
+      <span class="poem-line">and suffering</span>
+      <span class="poem-line">is bound to walk beyond</span>
+      <span class="poem-line">the cage of eternity and fate.</span>
+      <span class="poem-gap"></span>
+      <span class="poem-line">It is a destiny so humble —</span>
+      <span class="poem-line">it turns one into his own best self.</span>
+    </div>
+    <span class="poem-attribution">— T</span>
+  </div>
+</section>
+
+<!-- PART II -->
+<section id="part2" class="anthology-section">
+  <div class="chapter-header">
+    <div class="chapter-roman">II.</div>
+    <div class="chapter-title">THE CONTROLLED FLAME</div>
+    <div class="chapter-subtitle">New Work — Poems of Maturity · T · Jainulabid Alam</div>
+    <div class="chapter-rule"></div>
+  </div>
+
+  <div class="poem">
+    <div class="poem-title">Peripheral Visionary</div>
+    <div class="poem-body">
+      <span class="poem-line">A generosity born of direst circumstance</span>
+      <span class="poem-line">is nothing but grace to those who wished for it;</span>
+      <span class="poem-line">But worse are those who can only be generous —</span>
+      <span class="poem-line">yet never kind.</span>
+      <span class="poem-gap"></span>
+      <span class="poem-line">For even fire under a jar</span>
+      <span class="poem-line">is nothing but a dimming light —</span>
+      <span class="poem-line">a vision with small horizon</span>
+      <span class="poem-line">is nothing but a radiance of one's own choice.</span>
+      <span class="poem-gap"></span>
+      <span class="poem-line">Even a dimming light can walk you far</span>
+      <span class="poem-line">in its circular radiance —</span>
+      <span class="poem-line">but if you chose to walk only where you see,</span>
+      <span class="poem-line">how can I blame the light?</span>
+      <span class="poem-gap"></span>
+      <span class="poem-line">A choice that burns one's soul,</span>
+      <span class="poem-line">costing one's own sanity —</span>
+      <span class="poem-line">what a judgment it is</span>
+      <span class="poem-line">to be a peripheral visionary.</span>
+    </div>
+    <span class="poem-attribution">— T</span>
+  </div>
+
+  <div class="divider">✦  ✦  ✦</div>
+
+  <div class="poem">
+    <div class="poem-title">A Mind Unruled</div>
+    <div class="poem-body">
+      <span class="poem-line">A mind unruled by itself</span>
+      <span class="poem-line">can't be conqueror of the world.</span>
+    </div>
+    <span class="poem-attribution">— T</span>
+  </div>
+
+  <div class="divider">✦  ✦  ✦</div>
+
+  <div class="poem">
+    <div class="poem-title">How Can I Be Human</div>
+    <div class="poem-body">
+      <span class="poem-line">How can I be human to God</span>
+      <span class="poem-line">if I'm not hurt?</span>
+      <span class="poem-line">How can I be told I loved</span>
+      <span class="poem-line">if I was never even hurt</span>
+      <span class="poem-line">to cherish them?</span>
+    </div>
+    <span class="poem-attribution">— T</span>
+  </div>
+
+  <div class="divider">✦  ✦  ✦</div>
+
+  <div class="poem">
+    <div class="poem-title">Shall Mine Disappearance</div>
+    <div class="poem-body">
+      <span class="poem-line">Shall mine disappearance make others reminisce,</span>
+      <span class="poem-line">or shall the vanishing of me</span>
+      <span class="poem-line">remind mine own soul of them?</span>
+      <span class="poem-gap"></span>
+      <span class="poem-line">For the elegance of non-existence</span>
+      <span class="poem-line">is but to know</span>
+      <span class="poem-line">what existence truly is —</span>
+      <span class="poem-gap"></span>
+      <span class="poem-line">Thy heart that preserves thine absence</span>
+      <span class="poem-line">shall never be forsaken by remembrance,</span>
+      <span class="poem-line">whether thou choose to remain</span>
+      <span class="poem-line">or fade into the beyond.</span>
+    </div>
+    <span class="poem-attribution">— T</span>
+  </div>
+
+  <div class="divider">✦  ✦  ✦</div>
+
+  <div class="poem">
+    <div class="poem-title">Too Well Tangled</div>
+    <div class="poem-body">
+      <span class="poem-line">You will never be unloved by me —</span>
+      <span class="poem-line">you are too well tangled in my soul.</span>
+      <span class="poem-line">A love I did not choose.</span>
+      <span class="poem-line">Yet cannot unknow.</span>
+    </div>
+    <span class="poem-attribution">— T</span>
+  </div>
+
+  <div class="divider">✦  ✦  ✦</div>
+
+  <div class="poem">
+    <div class="poem-title">Knowledge and Wisdom</div>
+    <div class="poem-body">
+      <span class="poem-line">Your knowledge speaks of your understanding,</span>
+      <span class="poem-line">but wisdom shapes you</span>
+      <span class="poem-line">and your character.</span>
+      <span class="poem-gap"></span>
+      <span class="poem-line">Knowledge fills the mind,</span>
+      <span class="poem-line">wisdom shapes the character —</span>
+      <span class="poem-line">and only together</span>
+      <span class="poem-line">do they build the man.</span>
+    </div>
+    <span class="poem-attribution">— T</span>
+  </div>
+
+  <div class="divider">✦  ✦  ✦</div>
+
+  <div class="poem">
+    <div class="poem-title">Oh Peace of Solitude</div>
+    <div class="poem-body">
+      <span class="poem-line">Oh peace of solitude,</span>
+      <span class="poem-line">what I yearn for —</span>
+      <span class="poem-line">oh what can I give for thee?</span>
+    </div>
+    <span class="poem-attribution">— T</span>
+  </div>
+</section>
+
+<!-- PART III -->
+<section id="part3" class="anthology-section">
+  <div class="chapter-header">
+    <div class="chapter-roman">III.</div>
+    <div class="chapter-title">HOW IT CHANGE</div>
+    <div class="chapter-subtitle">Verses of Pain & Transformation · Irish · Idrish</div>
+    <div class="chapter-rule"></div>
+  </div>
+
+  <div class="poem">
+    <div class="poem-title">How It Change</div>
+    <div class="poem-body">
+      <div class="verse-item"><span class="verse-num">1.</span><span class="verse-text">I slept to avoid the pain but it got deeper like a knife that cuts through the time.</span></div>
+      <div class="verse-item"><span class="verse-num">2.</span><span class="verse-text">The pain in my heart is like a fungus. The more I cut, the more it grows.</span></div>
+      <div class="verse-item"><span class="verse-num">3.</span><span class="verse-text">The more I get better, the more I lose myself.</span></div>
+      <div class="verse-item"><span class="verse-num">4.</span><span class="verse-text">Slit my throat and in the gasping breaths I will apologise for bleeding on you.</span></div>
+      <div class="verse-item"><span class="verse-num">5.</span><span class="verse-text">Memories are like wine. The older it gets the better it is — but sometimes it's like a poison.</span></div>
+      <div class="verse-item"><span class="verse-num">6.</span><span class="verse-text">If you are tested, you will be praised.</span></div>
+      <div class="verse-item"><span class="verse-num">7.</span><span class="verse-text">And I swear to God whatever I go through, I will stand alone and will never ask anything from anyone, because humans always hurt each of them.</span></div>
+      <div class="verse-item verse-multiline">
+        <span class="verse-num">8.</span>
+        <span class="poem-line">And you still woke up without a good morning.</span>
+        <span class="poem-line">You still went to sleep without a 'good night.'</span>
+        <span class="poem-line">So you will live without an 'I'm so proud of you.'</span>
+        <span class="poem-line">Because in the end, you only have yourself.</span>
+        <span class="poem-line">And that's all you need.</span>
+      </div>
+      <div class="verse-item verse-multiline">
+        <span class="verse-num">9.</span>
+        <span class="poem-line">After that we started smiling,</span>
+        <span class="poem-line">My heart was so broken that I stopped loving.</span>
+        <span class="poem-line">That fog is blowing in time,</span>
+        <span class="poem-line">For whose sake we stole the world.</span>
+      </div>
+      <div class="verse-item"><span class="verse-num">10.</span><span class="verse-text">And as the time passed I start forgetting your name, your voice, your smile, your face.</span></div>
+      <div class="verse-item"><span class="verse-num">11.</span><span class="verse-text">You're the beautiful path of my life which I will never walked together on; but you became the memories of imagination I will live on.</span></div>
+      <div class="verse-item"><span class="verse-num">12.</span><span class="verse-text">And I saw you running alone all along, fading from the world, getting into the mist of forest — all along you're gone.</span></div>
+      <div class="verse-item"><span class="verse-num">13.</span><span class="verse-text">Your destination was here, life passed by. What did you get from the world while coming? Your own people burnt you while leaving.</span></div>
+      <div class="verse-item"><span class="verse-num">14.</span><span class="verse-text">Things used to happen before — now you just reply.</span></div>
+      <div class="verse-item"><span class="verse-num">15.</span><span class="verse-text">There's a time when I'm convinced that the humans are unfit for the world and the law of nature.</span></div>
+      <div class="verse-item"><span class="verse-num">16.</span><span class="verse-text">There's a time when I'm convinced that humans are unfit for any relationship in world.</span></div>
+    </div>
+    <span class="poem-attribution">— Irish · Idrish</span>
+  </div>
+
+  <div class="divider">✦  ✦  ✦</div>
+
+  <div class="poem">
+    <div class="poem-title">Special — On Shoulders</div>
+    <div class="poem-body">
+      <span class="poem-line">On my shoulders,</span>
+      <span class="poem-line">There are sins that I have never committed,</span>
+      <span class="poem-line">There is hypocrisy in my words;</span>
+      <span class="poem-line">There is love in my sorrow.</span>
+      <span class="poem-gap"></span>
+      <span class="poem-line">Do you see?</span>
+      <span class="poem-line">Maybe my truth was wrong.</span>
+      <span class="poem-line">I questioned your love, your affection.</span>
+      <span class="poem-line">Your roads were closed — I didn't force it.</span>
+      <span class="poem-line">I killed my flowers, I couldn't keep them alive.</span>
+      <span class="poem-line">I couldn't hear — your leaving was silent.</span>
+      <span class="poem-gap"></span>
+      <span class="poem-line">I cannot know the tomorrow.</span>
+      <span class="poem-line">Will you come back in silence?</span>
+      <span class="poem-line">I don't think so.</span>
+    </div>
+    <span class="poem-attribution">— Irish · Idrish</span>
+  </div>
+
+  <div class="divider">✦  ✦  ✦</div>
+
+  <div class="poem">
+    <div class="poem-title">Words Upon the Skin</div>
+    <div class="poem-body">
+      <span class="poem-line">If the words you spoke</span>
+      <span class="poem-line">appeared on your skin —</span>
+      <span class="poem-line">would you still be beautiful?</span>
+    </div>
+    <span class="poem-attribution">— Irish · Idrish</span>
+  </div>
+</section>
+
+<!-- PART IV -->
+<section id="part4" class="anthology-section">
+  <div class="chapter-header">
+    <div class="chapter-roman">IV.</div>
+    <div class="chapter-title">SHE</div>
+    <div class="chapter-subtitle">Vol. I — Devotions of the Beloved · Irish · Idrish</div>
+    <div class="chapter-rule"></div>
+  </div>
+
+  <div class="poem">
+    <div class="poem-title">She</div>
+    <div class="poem-body">
+      <div class="verse-item"><span class="verse-num">1.</span><span class="verse-text">Even with all these scars she's the most beautiful.</span></div>
+      <div class="verse-item"><span class="verse-num">2.</span><span class="verse-text">The enthusiasm of Mozart can't express her voice in his notes the way I feel.</span></div>
+      <div class="verse-item"><span class="verse-num">3.</span><span class="verse-text">And when the end comes I will reach out for you and will hold you forever.</span></div>
+      <div class="verse-item"><span class="verse-num">4.</span><span class="verse-text">I mean it that I am always sincere with you. I swear with all my heart.</span></div>
+      <div class="verse-item verse-multiline">
+        <span class="verse-num">5.</span>
+        <span class="poem-line">There is no habit of following the heart with dreams.</span>
+        <span class="poem-line">There is no habit of smiling every time.</span>
+        <span class="poem-line">This thought — that no one will come —</span>
+        <span class="poem-line">Now we don't have the habit of getting angry.</span>
+      </div>
+      <div class="verse-item"><span class="verse-num">6.</span><span class="verse-text">There is so much beauty in your simplicity, how will your beauty be? Your anger is like this — how will be your love…</span></div>
+      <div class="verse-item verse-multiline">
+        <span class="verse-num">7.</span>
+        <span class="poem-line">Even the way I love you smells like you.</span>
+        <span class="poem-line">Even the way I walked had that laughter.</span>
+        <span class="poem-line">All of you will disappear someday —</span>
+        <span class="poem-line">what I burn into my eyes.</span>
+        <span class="poem-line">It's no longer a right, I think it's a duty.</span>
+        <span class="poem-line">Fate or the future — how many hands can words?</span>
+        <span class="poem-line">I can't reach it even if I try to stretch it.</span>
+        <span class="poem-line">We fall in love at a place.</span>
+      </div>
+      <div class="verse-item"><span class="verse-num">8.</span><span class="verse-text">Blooming like a lily is not so special for me than other guys because my flower blooms once in a year like an epiphyllum of the night.</span></div>
+      <div class="verse-item verse-multiline">
+        <span class="verse-num">9.</span>
+        <span class="poem-line">Red or white let's live tonight,</span>
+        <span class="poem-line">between the ageing day of yours or mine.</span>
+        <span class="poem-line">Let's hold hands till we die —</span>
+        <span class="poem-line">the love of yours that never flows away from the 15th October of night.</span>
+      </div>
+      <div class="verse-item"><span class="verse-num">10.</span><span class="verse-text">You did something that I never did for myself. You loved me then when I hated myself.</span></div>
+      <div class="verse-item verse-multiline">
+        <span class="verse-num">11.</span>
+        <span class="poem-line">Even if we die — even if we die —</span>
+        <span class="poem-line">my soul is gonna look for your soul.</span>
+        <span class="poem-line">It's gonna love you in every lifetime,</span>
+        <span class="poem-line">you can't escape it.</span>
+        <span class="poem-line">Never forget that.</span>
+      </div>
+      <div class="verse-item"><span class="verse-num">12.</span><span class="verse-text">You are the only paradise I've ever needed. The day you said you'd be mine was the day I stopped requiring anything else from existence.</span></div>
+      <div class="verse-item"><span class="verse-num">13.</span><span class="verse-text">And in a world where people can't understand my words, I found someone who understood my silence and anger.</span></div>
+      <div class="verse-item"><span class="verse-num">14.</span><span class="verse-text">I will always wait for you even if you won't come back. I will still be here.</span></div>
+      <div class="verse-item verse-multiline">
+        <span class="verse-num">15.</span>
+        <span class="poem-line">I feel like seeing you to my heart's content.</span>
+        <span class="poem-line">But the question is — when will I be satisfied?</span>
+      </div>
+      <div class="verse-item"><span class="verse-num">16.</span><span class="verse-text">You are my friend, you are my love, you are my one, you are my thousand, you are my anger, you are my forgiveness — you are enough in my life's journey. You are enough.</span></div>
+      <div class="verse-item"><span class="verse-num">17.</span><span class="verse-text">I feel like a part of my soul has loved you since the beginning of everything. Maybe we're from the same star.</span></div>
+    </div>
+    <span class="poem-attribution">— Irish · Idrish</span>
+  </div>
+</section>
+
+<!-- PART V -->
+<section id="part5" class="anthology-section">
+  <div class="chapter-header">
+    <div class="chapter-roman">V.</div>
+    <div class="chapter-title">SHE — VOL. II</div>
+    <div class="chapter-subtitle">Deeper Devotions · Irish · Idrish</div>
+    <div class="chapter-rule"></div>
+  </div>
+
+  <div class="poem">
+    <div class="poem-title">She · Vol. II</div>
+    <div class="poem-body">
+      <div class="verse-item"><span class="verse-num">1.</span><span class="verse-text">When my heart falls in love with you — hear my heart, dear — it's the day from when I can't see nothing but paradise in your eyes.</span></div>
+      <div class="verse-item"><span class="verse-num">2.</span><span class="verse-text">What I am to you, you're mine.</span></div>
+      <div class="verse-item"><span class="verse-num">3.</span><span class="verse-text">Even on the dawn of my worst, your presence makes everything beautiful around me.</span></div>
+      <div class="verse-item"><span class="verse-num">4.</span><span class="verse-text">The desire remains to be better — the moon returns to where the moon appears.</span></div>
+      <div class="verse-item"><span class="verse-num">5.</span><span class="verse-text">And then if a few results are achieved, the sun appears upon us.</span></div>
+      <div class="verse-item"><span class="verse-num">6.</span><span class="verse-text">I have been attached to myself throughout my life. I have remembered myself throughout my life.</span></div>
+      <div class="verse-item"><span class="verse-num">7.</span><span class="verse-text">You come in my mind like a poem that struck this heart with love. You're the fragrance of which garden that I was farming my whole life. I feel your fragrance in the garden of flowers that's beyond words.</span></div>
+      <div class="verse-item"><span class="verse-num">8.</span><span class="verse-text">You're that incomplete path of life which I want to walk on — yet beautiful as an imagination.</span></div>
+      <div class="verse-item"><span class="verse-num">9.</span><span class="verse-text">I'm a mosaic before I loved her.</span></div>
+      <div class="verse-item"><span class="verse-num">10.</span><span class="verse-text">An eye with dust and a heart with trust always cries.</span></div>
+      <div class="verse-item"><span class="verse-num">11.</span><span class="verse-text">She wasn't mine, I wasn't hers — but I still believe, maybe, just maybe, we belonged to each other.</span></div>
+      <div class="verse-item verse-multiline">
+        <span class="verse-num">12.</span>
+        <span class="poem-line">I would be the sun for you rather than the moon.</span>
+        <span class="poem-line">I would rather guide and warm you rather than shine coldly over you.</span>
+        <span class="poem-line">I would give you warm rays of love than be a moon only for light in your darkness.</span>
+        <span class="poem-line">I would light your world and show you the path with bright light,</span>
+        <span class="poem-line">rather than being a dim ray.</span>
+      </div>
+      <div class="verse-item"><span class="verse-num">13.</span><span class="verse-text">And you take the water with your hands by the seashore — as much as you can take is your desire, and what you can't take is my love.</span></div>
+      <div class="verse-item"><span class="verse-num">14.</span><span class="verse-text">Your eyes, like stars, illuminate my soul. With every gaze, my heart is made whole.</span></div>
+      <div class="verse-item verse-multiline">
+        <span class="verse-num">15.</span>
+        <span class="poem-line">I hug you with my prayers.</span>
+        <span class="poem-line">I kiss you with my eyes.</span>
+        <span class="poem-line">I adore you with my mind.</span>
+        <span class="poem-line">I love you with my heart.</span>
+      </div>
+      <div class="verse-item"><span class="verse-num">16.</span><span class="verse-text">I saw you in my dreams again. I held you a little tighter because I knew when I wake up you'd be gone.</span></div>
+      <div class="verse-item verse-multiline">
+        <span class="verse-num">17.</span>
+        <span class="poem-line">Oh my dear — where are the nights I was calling you?</span>
+        <span class="poem-line">I miss your eyes.</span>
+        <span class="poem-line">I miss seeing you.</span>
+        <span class="poem-line">My mind is busy with you all the time</span>
+        <span class="poem-line">and the nights are getting longer —</span>
+        <span class="poem-line">and yet we are not together.</span>
+      </div>
+      <div class="verse-item"><span class="verse-num">18.</span><span class="verse-text">The bond of your memory never breaks from the heart. Whether there is a conversation or not, your thought is stuck in my heart.</span></div>
+      <div class="verse-item"><span class="verse-num">19.</span><span class="verse-text">What a joy it is to have the ability to love.</span></div>
+      <div class="verse-item"><span class="verse-num">20.</span><span class="verse-text">You're the fairytale of what they used to say in couples.</span></div>
+      <div class="verse-item"><span class="verse-num">21.</span><span class="verse-text">Always together, never apart — maybe in distance, but never in heart.</span></div>
+      <div class="verse-item"><span class="verse-num">22.</span><span class="verse-text">I was a traveler before, a loner now — I'm in the follower after her.</span></div>
+    </div>
+    <span class="poem-attribution">— Irish · Idrish</span>
+  </div>
+</section>
+
+<!-- PART VI -->
+<section id="part6" class="anthology-section">
+  <div class="chapter-header">
+    <div class="chapter-roman">VI.</div>
+    <div class="chapter-title">QUOTE — VOL. II</div>
+    <div class="chapter-subtitle">Aphorisms of Flame & Ash · Irish · Idrish</div>
+    <div class="chapter-rule"></div>
+  </div>
+
+  <div class="poem">
+    <div class="poem-title">Quote · Vol. II</div>
+    <div class="poem-body">
+      <div class="verse-item"><span class="verse-num">1.</span><span class="verse-text">Never beg for place to those who don't understand you — be someone that others want to sit beside.</span></div>
+      <div class="verse-item"><span class="verse-num">2.</span><span class="verse-text">When you feel lonely, you start liking the company of your enemies too.</span></div>
+      <div class="verse-item"><span class="verse-num">3.</span><span class="verse-text">And you waste your today because your mind knows there's a tomorrow.</span></div>
+      <div class="verse-item"><span class="verse-num">4.</span><span class="verse-text">And when they stop getting benefits, so do their loyalty.</span></div>
+      <div class="verse-item"><span class="verse-num">5.</span><span class="verse-text">Those who answer from the heart — even if they do it in front of them — they will not look.</span></div>
+      <div class="verse-item"><span class="verse-num">6.</span><span class="verse-text">Each of your opponents are strong, but not as strong as you are in yourself and in your bloodline.</span></div>
+      <div class="verse-item"><span class="verse-num">7.</span><span class="verse-text">Be like a diamond — precious and rare — not like a stone, found everywhere.</span></div>
+      <div class="verse-item"><span class="verse-num">8.</span><span class="verse-text">Make every part of my body connected to You. I will get blessed by You, and when they hurt me — O God — I cry for blessings of You.</span></div>
+      <div class="verse-item"><span class="verse-num">9.</span><span class="verse-text">And you gave them your shoulder and soft words of sympathy, while you're shattered inside.</span></div>
+      <div class="verse-item"><span class="verse-num">10.</span><span class="verse-text">Thinking about the past can make each suffer and will always take you back — but learning about the future can be a mess too. So live the present proud.</span></div>
+      <div class="verse-item"><span class="verse-num">11.</span><span class="verse-text">I thought myself the instrument of God, not the tool of a man.</span></div>
+      <div class="verse-item"><span class="verse-num">12.</span><span class="verse-text">I do no one's bidding but God's.</span></div>
+      <div class="verse-item"><span class="verse-num">13.</span><span class="verse-text">The only thing between an innocent and the predator…</span></div>
+      <div class="verse-item"><span class="verse-num">14.</span><span class="verse-text">Can you remember who you were, before the world told you who you should be?</span></div>
+      <div class="verse-item"><span class="verse-num">15.</span><span class="verse-text">Men are more ready to repay an injury than a benefit — because gratitude is a burden and revenge a pleasure.</span></div>
+      <div class="verse-item"><span class="verse-num">16.</span><span class="verse-text">Sometimes people are beautiful. Not in looks. Not in what they say. Just in what they are.</span></div>
+      <div class="verse-item"><span class="verse-num">17.</span><span class="verse-text">I'd keep on going if they'd let me.</span></div>
+    </div>
+    <span class="poem-attribution">— Irish · Idrish</span>
+  </div>
+</section>
+
+</div><!-- /anthology -->
+
+<!-- DOWNLOAD -->
+<section id="download">
+  <div class="section-label" style="font-family:'Cinzel',serif;font-size:10px;letter-spacing:5px;color:var(--crimson-bright);text-transform:uppercase;margin-bottom:24px;">Free Download</div>
+  <div class="download-title">Take the Anthology With You</div>
+  <div class="download-sub">Free to read. Free to keep. Free to share.</div>
+  <div class="download-formats">
+    <a href="downloadfile.PDF" download="Peripheral_Visionary_Grand_Anthology.pdf" class="format-btn main">
+      ↓ &nbsp;Download PDF
+    </a>
+    <a href="Peripheral_Visionary_Grand_Anthology.docx" download class="format-btn">
+      ↓ &nbsp;Download DOCX
+    </a>
+  </div>
+  <p style="margin-top:28px;font-size:14px;font-style:italic;color:var(--ghost);">
+    No sign-up required. No strings attached.
+  </p>
+</section>
+
+<!-- COMMENTS -->
+<section id="comments">
+  <div class="comments-header">
+    <div class="comments-title">Leave a Note</div>
+    <div class="comments-sub">Your words reach the authors. Every message is read.</div>
+  </div>
+
+  <form class="comment-form" id="commentForm">
+    <div class="form-row">
+      <div class="form-group">
+        <label class="form-label" for="name">Your Name</label>
+        <input class="form-input" type="text" id="name" placeholder="Anonymous Wanderer" required>
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="email">Your Email <span style="color:var(--ghost);font-size:11px;">(optional)</span></label>
+        <input class="form-input" type="email" id="email" placeholder="your@email.com">
+      </div>
+    </div>
+    <div class="form-group" style="margin-bottom:16px;">
+      <label class="form-label" for="poem">Which piece moved you?</label>
+      <select class="form-select" id="poem">
+        <option value="The anthology as a whole">The anthology as a whole</option>
+        <optgroup label="Part I — The Raw Fire">
+          <option>I Have No Eyes But I Must See</option>
+          <option>Burn Bright</option>
+          <option>I Loved You as Icarus</option>
+          <option>Oh Lord</option>
+          <option>So When the Lord Commanded</option>
+          <option>A Man Is Only Chained</option>
+        </optgroup>
+        <optgroup label="Part II — The Controlled Flame">
+          <option>Peripheral Visionary</option>
+          <option>Shall Mine Disappearance</option>
+          <option>Too Well Tangled</option>
+          <option>Knowledge and Wisdom</option>
+        </optgroup>
+        <optgroup label="Part III — How It Change">
+          <option>How It Change</option>
+          <option>Special — On Shoulders</option>
+          <option>Words Upon the Skin</option>
+        </optgroup>
+        <optgroup label="Part IV/V — She">
+          <option>She · Vol. I</option>
+          <option>She · Vol. II</option>
+        </optgroup>
+        <optgroup label="Part VI — Quote Vol. II">
+          <option>Quote · Vol. II</option>
+        </optgroup>
+      </select>
+    </div>
+    <div class="form-group" style="margin-bottom:16px;">
+      <label class="form-label" for="message">Your Message</label>
+      <textarea class="form-textarea" id="message" placeholder="What did these words stir in you?" required></textarea>
+    </div>
+    <button type="submit" class="form-submit" id="submitBtn">Send Your Note</button>
+    <p class="form-note">
+      Your message will be sent directly to the authors at
+      <a href="mailto:jainulabidalam@gmail.com">jainulabidalam@gmail.com</a>
+    </p>
+  </form>
+
+  <div class="success-msg" id="successMsg">
+    ✦ &nbsp; Your note has been carried on the wind. The authors will receive it. &nbsp; ✦
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-ornament">✦</div>
+  <div class="footer-quote">"The fire dims. But the peripheral light remains."</div>
+  <div class="footer-attr">T · Jainulabid Alam &nbsp;&amp;&nbsp; Irish · Idrish</div>
+  <div class="footer-copy">© Peripheral Visionary — The Grand Anthology. All rights reserved.</div>
+</footer>
+
+<!-- READING MODE TOGGLE -->
+<button class="mode-toggle" id="modeToggle" title="Toggle reading mode">☽ Read</button>
+
+<script>
+// ── STARS ──
+const starsEl = document.getElementById('stars');
+for (let i = 0; i < 120; i++) {
+  const s = document.createElement('div');
+  s.className = 'star';
+  const size = Math.random() * 2 + 0.5;
+  s.style.cssText = `
+    width:${size}px;height:${size}px;
+    top:${Math.random()*100}%;left:${Math.random()*100}%;
+    --d:${2+Math.random()*5}s;
+    animation-delay:${Math.random()*5}s;
+    opacity:${0.1+Math.random()*0.5};
+  `;
+  starsEl.appendChild(s);
+}
+
+// ── SCROLL PROGRESS ──
+const progress = document.getElementById('progress');
+window.addEventListener('scroll', () => {
+  const pct = window.scrollY / (document.body.scrollHeight - window.innerHeight) * 100;
+  progress.style.width = pct + '%';
+});
+
+// ── READING MODE ──
+const toggle = document.getElementById('modeToggle');
+let reading = false;
+toggle.addEventListener('click', () => {
+  reading = !reading;
+  document.body.classList.toggle('reading-mode', reading);
+  toggle.textContent = reading ? '✦ Exit' : '☽ Read';
+  if (reading) window.scrollTo({ top: document.getElementById('anthology').offsetTop - 80, behavior:'smooth' });
+});
+
+// ── COMMENT FORM → mailto ──
+document.getElementById('commentForm').addEventListener('submit', function(e) {
+  e.preventDefault();
+  const name    = document.getElementById('name').value.trim();
+  const email   = document.getElementById('email').value.trim();
+  const poem    = document.getElementById('poem').value;
+  const message = document.getElementById('message').value.trim();
+
+  const subject = encodeURIComponent(`[Peripheral Visionary] Note from ${name} — "${poem}"`);
+  const body = encodeURIComponent(
+    `Name: ${name}\nEmail: ${email || 'Not provided'}\nPiece: ${poem}\n\n${message}\n\n— Sent from peripheralvisionary.site`
+  );
+
+  const btn = document.getElementById('submitBtn');
+  btn.disabled = true;
+  btn.textContent = 'Opening Mail…';
+
+  window.location.href = `mailto:jainulabidalam@gmail.com?subject=${subject}&body=${body}`;
+
+  setTimeout(() => {
+    document.getElementById('commentForm').style.display = 'none';
+    document.getElementById('successMsg').style.display = 'block';
+  }, 1200);
+});
+</script>
+</body>
+</html>
